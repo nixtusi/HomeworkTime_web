@@ -1,0 +1,218 @@
+<div class="todo">
+    <h1>TODO</h1>
+    
+    <form action="/add" method="get">
+        <input type="submit" value="追加">
+    </form>
+
+    <!--<form action="/record" method="get">-->
+    <!--    <input type="submit" value="記録">-->
+    <!--</form>-->
+    
+    <!--<div class="mx-auto" style="width: 100%; margin: auto;">-->
+    <!--      <div class="card grid" style="width: 20rem; margin: 20px;">-->
+    <!--        <div class="card-body" style="width: 18rem; margin: auto;">-->
+    <!--          <p style="font-family: 'New Tegomin';">タイトル</p>-->
+    <!--          <p style="font-family: 'New Tegomin';">今日の範囲</p>-->
+    <!--          <p style="font-family: 'New Tegomin';">全体範囲</p>-->
+    <!--          <p style="font-family: 'New Tegomin';">期限</p>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
+
+    <div class="wrap">
+        
+        
+    <% @homework.each do |homework| %>
+    
+        
+        <%
+        arrays = homework.homework_range.split(",")
+        
+        # 総ページ数の変数
+        page_amount = 0
+        
+        #締切までの日数
+        remain = 0
+        
+         #1日の量
+        day_page = 0
+        
+        from_first = 0
+        
+        # 各ページのページ数配列
+        array_pages = []
+        
+        # 宿題ページ数字だけ
+        page_individual = []
+        
+        # 今日するところ
+        today_page = []
+        
+        #配列「〜」
+        today_page_range = ""
+        
+        num = 0
+        
+
+        arrays.each do |page|
+    
+        numbers = page.split("~")
+        
+            page_individual.push(Integer(numbers[0]))
+            page_individual.push(Integer(numbers[1]))
+        
+           page_amount += Integer(numbers[1]) - Integer(numbers[0]) + 1
+          
+           array_pages.push(page_amount)
+           
+           #日後
+           today = DateTime.now
+           remain = (homework.homework_deadline - today + 1).to_i
+           
+           if page_amount%remain==0 
+               day_page = page_amount/remain
+           else
+               day_page = page_amount/remain+1
+           end
+           
+             array_pages.each do |range_num|
+               
+              if day_page>range_num
+                  from_first += 1
+              end
+                
+            end
+
+        end
+        
+
+        
+        today_page = page_individual[0...2*from_first + 2]
+        
+        
+        if from_first == 0
+            today_page[1] = today_page[0] + day_page - 1
+        else
+            today_page[2*from_first + 1] = today_page[2*from_first] + day_page - array_pages[from_first - 1] - 1
+        end
+        
+        for num in 1...(from_first + 2) do
+            today_page_range += (today_page[2*num - 2]).to_s + "〜" + (today_page[2*num - 1]).to_s
+            
+            if num != (from_first + 1) 
+                today_page_range += " , "
+            end
+        end
+        
+        today_page_range = "P. " + today_page_range
+        homework.homework_range = "P. " + homework.homework_range
+        
+        %>
+
+        
+        <div class=today_homework>
+            <!--<p><%=homework.homework_name%></p>-->
+            <!--<p><%=homework.homework_range%></p>-->
+            <!--<p><%=homework.homework_deadline%></p>-->
+            <!--<p><%=day_page %><%="ページ/日"%></p>-->
+            <!--<p><%=today_page_range%></p>-->
+            
+            
+            <div　class="mx-auto" style="width: 100%; margin: auto;">
+                  <div class="card grid" style="width: 20rem; margin: 20px;">
+                    <div class="card-body" style="width: 18rem; margin: auto;">
+                      <p style="font-family: 'New Tegomin';"><%=homework.homework_name%></p>
+                      <p class="no-hover" style="font-family: 'New Tegomin';"><%=today_page_range%></p>
+                      <p class="hover" style="font-family: 'New Tegomin';"><%=homework.homework_range%></p>
+                      <p style="font-family: 'New Tegomin';"><%=homework.homework_deadline%></p>
+                      
+                      
+                      <div class="d-flex justify-content-end align-items-center mt-3">
+                        <!--<form action="/delete/11" method="post">-->
+                        <!--  <input type="submit" value="DELETE" class="btn card-footer-text">-->
+                        <!--</form>-->
+                        <!--<a href="/edit/11" class="btn card-footer-text">EDIT</a>-->
+    
+                      </div>
+                    </div>
+                  </div>
+  
+                  <div class="modal fade" id="exampleModal-11" "=" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <!--<div class="modal-header">-->
+                        <!--  <h5 class="modal-title" id="exampleModalLabel">解答</h5>-->
+                        <!--  <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+                        <!--    <span aria-hidden="true">×</span>-->
+                        <!--  </button>-->
+                        <!--</div>-->
+                      <div class="modal-body">
+              
+                    </div>
+                  </div>
+            </div>
+        </div>
+    
+        <style>
+       
+        
+          .grid {
+            background: #fff;
+            float: left;
+            font-size: 12px;
+            margin: 8px;
+            min-height: 100px;
+            width: 188px;
+            -webkit-transition: top 1s ease, left 1s ease;
+            -moz-transition: top 1s ease, left 1s ease;
+            -o-transition: top 1s ease, left 1s ease;
+            transition: top 1s ease, left 1s ease;
+            
+            border-radius: 20px;
+            border:3px solid black;
+            
+            margin :auto;
+           
+          }
+          .wrap{
+              display: flex;/*横ならべ*/
+              flex-wrap: wrap;/*画面幅超えたら折り返す*/
+              justify-content: left;/*disply:flexの時に左寄せにしたい時*/
+              grid-column: 3;/*何列表示させるか*/
+              width: 1100px;
+              margin: auto;
+          }
+          
+          .card:hover{
+             background-color: pink;
+             
+            }
+          
+          .card:hover .hover{
+              display: block;
+          }
+          
+          .card:hover .no-hover{
+              display: none;
+          }
+          
+          .hover{
+              display: none;
+          }
+          
+          
+          
+          
+        </style>
+
+        </div　class="mx-auto">
+        
+           
+        </div>
+       
+
+    <%end%>
+    </div>
+</div>
+

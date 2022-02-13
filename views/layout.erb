@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charest="UTF-8">
+        <title>タイトル</title>
+        <link rel="stylesheet" href="/style.css">
+        <link rel="stylesheet" href="/normalize.css">
+    </head>
+    <body>
+        
+        <header>
+           
+            <% if !current_user.nil? %>
+                <li><a href="/signout">ログアウト/header</a></li>
+            <% end %>
+                
+        </header>
+        
+        <%= yield %>
+    </body>
+</html>

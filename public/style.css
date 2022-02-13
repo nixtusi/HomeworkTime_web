@@ -1,0 +1,114 @@
+     body{
+        background-color:yellow;
+    }
+    
+    h1{
+        text-align: center;
+        margin-bottom: 50px;
+    }
+    
+    .login{
+        display: flex; 
+        flex-direction: column;
+        
+        margin-left: auto;
+        margin-right: auto;
+        width: 500px;
+        text-align: center;
+    }
+    
+    .login a{
+        display: inline;
+        background-color:white;
+        border:3px solid black;
+        
+        border-radius: 20px;
+        margin-bottom: 10px;
+        font-size: 20px;
+        
+        height: 40px;
+        line-height: 40px;
+        
+        text-decoration: none;
+        
+        color: black;
+    }
+    
+    .login a:hover{
+        background-color: orange;
+    }
+    
+    
+    
+    /*formを真ん中に*/
+    form {
+        display: flex; 
+        flex-direction: column;
+        
+        margin-left: auto;
+        margin-right: auto;
+        width: 400px;
+        text-align: center;
+        
+    }
+    
+    input{
+        background-color:white;
+        border:3px solid black;
+        
+        border-radius: 20px;
+        margin-bottom: 1px;
+        font-size: 20px;
+        
+        padding-left:15px;
+        
+        height: 40px;
+        line-height: 40px;
+        
+    }
+    
+    input[type="submit"]{
+        background-color:white;
+        border:3px solid black;
+        
+        /*角丸*/
+        border-radius: 20px; 　
+        
+        margin-bottom: 10px;
+        font-size: 20px;
+        
+        height: 40px;
+        line-height: 30px;
+        
+        width: 100%;
+        display:block;
+        
+        text-decoration: none;
+        
+        color: black;
+    }
+    
+    input[type="submit"]:hover{
+        background-color: orange;
+    }
+    
+    .todo{
+        text-align: center;
+        margin-bottom: 50px;
+        margin:auto;
+    }
+    
+    .todo .today_homework{
+        display:flex;
+        justify-content: center;
+    }
+    
+    .todo .today_homework p{
+        margin-right:10px;
+    }
+    
+    /*
+    fleの時
+    横方向にcenter → justify-content: center;
+    縦方向にcenter　→ align-items: center;
+    */
