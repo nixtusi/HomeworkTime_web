@@ -25,33 +25,39 @@ get '/signup' do
 end
 
 post '/signin' do
-    user = User.find_by(mail: params[:mail])
+    user = User.find_by(name: params[:name])
     if user && user.authenticate(params[:password])
         session[:user] = user.id
+    
+        redirect '/home/todo'
     end
-    redirect '/home/todo'
+    
+    redirect '/signin'
 end
 
 post '/signup' do
-    @user = User.create(mail: params[:mail],password: params[:password],
+    user = User.create(name: params[:name],password: params[:password],
     password_confirmation: params[:password_confirmation])
     
-    if @user.persisted?
-        session[:user] = @user.id
+    if user.persisted?
+        session[:user] = user.id
+        
+        redirect '/home/todo'
     end
-   redirect '/home/todo'
+   redirect '/signup'
 end
 
 get '/signout' do
     session[:user] = nil
-    redirect '/signin'
+    redirect '/'
 end
 
 post '/home/todo'do
     Homework.create(
         homework_name: params[:homework_name],
         homework_range: params[:homework_range],
-        homework_deadline: params[:homework_deadline]
+        homework_deadline: params[:homework_deadline],
+        userID: params[:userID]
         )
         
     redirect '/home/todo'

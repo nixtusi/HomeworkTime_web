@@ -2,20 +2,71 @@
 <html lang="ja">
     <head>
         <meta charest="UTF-8">
-        <title>タイトル</title>
+        <title>Homework Time</title>
         <link rel="stylesheet" href="/style.css">
         <link rel="stylesheet" href="/normalize.css">
     </head>
     <body>
-        
         <header>
            
             <% if !current_user.nil? %>
-                <li><a href="/signout">ログアウト/header</a></li>
+                <!--<li><a href="/signout">ログアウト</a></li>-->
+                <form action="/signout" method="get">
+                    <input type="submit" value="ログアウト">
+                </form>
+               
             <% end %>
                 
         </header>
-        
         <%= yield %>
     </body>
+    
+    <style>
+        header form{
+            margin: 10px auto auto 10px;
+            width: 10%;
+        }
+        
+        input[type="submit",value="ログアウト"]{
+        background-color:white;
+        border:3px solid black;
+        
+        border-radius: 20px;
+        margin-bottom: 1px;
+        margin-left: auto;
+        font-size: 20px;
+        
+        padding-left:15px;
+        
+        height: 40px;
+        line-height: 40px;
+        
+        }
+        
+        input[type="submit",value="ログアウト"]{
+            background-color:white;
+            border:3px solid black;
+            
+            /*角丸*/
+            border-radius: 20px; 　
+            
+            margin-bottom: 10px;
+            font-size: 20px;
+            
+            height: 40px;
+            line-height: 30px;
+            
+            width: 100%;
+            display:block;
+            
+            text-decoration: none;
+            
+            color: black;
+        }
+        
+        input[type="submit"]:hover{
+            background-color: orange;
+        }
+    </style>
+    
 </html>
